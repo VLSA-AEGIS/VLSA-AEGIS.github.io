@@ -1,53 +1,388 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>AEGIS: Vision-Language-Safe Action</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Awesome Paper - Project Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        body { font-family: 'Helvetica', sans-serif; max-width: 800px; margin: 0 auto; padding: 40px; line-height: 1.6; }
-        h1 { text-align: center; color: #333; }
-        .authors { text-align: center; color: #666; margin-bottom: 40px; }
-        .abstract { background: #f9f9f9; padding: 20px; border-radius: 8px; }
-        .figure { text-align: center; margin: 30px 0; }
-        img { max-width: 100%; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .btn-link { display: inline-block; padding: 10px 20px; background: #333; color: white; text-decoration: none; border-radius: 5px; margin: 5px; }
-        .btn-link:hover { background: #555; }
+        :root {
+            --primary-color: #333;
+            --accent-color: #209cee; 
+            --link-color: #007bff;
+            --bg-color: #ffffff;
+            --text-color: #2c3e50;
+            --max-width: 960px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 布局容器 */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center; /* 默认居中，正文再左对齐 */
+        }
+
+        /* 标题部分 */
+        header {
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            color: #000;
+        }
+
+        .conference-badge {
+            display: inline-block;
+            background-color: #e0f7fa;
+            color: #006064;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            border: 1px solid #b2ebf2;
+        }
+
+        .authors {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .authors a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 8px;
+            font-weight: 500;
+        }
+
+        .authors a:hover {
+            text-decoration: underline;
+            color: var(--link-color);
+        }
+
+        .affiliations {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .affiliations span {
+            margin: 0 10px;
+        }
+
+        /* paper和code的链接 */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #000;
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* 章节通用样式 */
+        section {
+            margin-bottom: 50px;
+            text-align: justify; /* 正文两端对齐 */
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        /* 图片与图注 */
+        .figure-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .figure-container img, .figure-container video {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .caption {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #555;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* 关键结果展示 (Key Results) */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .result-card .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .result-card .label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .result-card .sub-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* 视频演示对比 (Demos) */
+        .demo-block {
+            margin-bottom: 40px;
+        }
+        
+        .demo-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: left;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        .video-compare {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .video-item {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .video-item video {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .video-label {
+            text-align: center;
+            font-weight: 600;
+            margin-top: 5px;
+            color: #444;
+        }
+
+        /* 代码块 (BibTeX) */
+        pre {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 60px;
+            padding: 30px 0;
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            border-top: 1px solid #eee;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .btn { width: 100%; justify-content: center; margin-bottom: 10px; }
+            .action-buttons { flex-direction: column; gap: 10px; }
+        }
     </style>
 </head>
 <body>
 
-    <h1>AEGIS: Vision-Language-Safe Action Architecture</h1>
-    
-    <div class="authors">
-        <p><strong>Your Name</strong>, Co-author 1, Co-author 2</p>
-        <p><em>Institution / University</em></p>
+<div class="container">
+    <header>
+        <div class="conference-badge">NeurIPS 2025 Spotlight (Mock)</div>
         
-        <div style="margin-top: 20px;">
-            <a href="#" class="btn-link">Paper (PDF)</a>
-            <a href="#" class="btn-link">Code (GitHub)</a>
-            <a href="#" class="btn-link">Video</a>
+        <h1>This is a title!</h1>
+        
+        <div class="authors">
+            <a href="#">Zhang San<sup>1</sup></a>
+            <a href="#">Li Si<sup>1,*</sup></a>
+            <a href="#">Wang Wu<sup>2</sup></a>
         </div>
-    </div>
+        
+        <div class="affiliations">
+            <span><sup>1</sup>Tsinghua University</span>
+            <span><sup>2</sup>Peking University</span>
+            <br>
+            <span><sup>*</sup>Equal Contribution</span>
+            <span><sup>†</sup>Corresponding Author</span>
+        </div>
 
-    <div class="figure">
-        <img src="https://via.placeholder.com/800x400?text=Place+Your+Teaser+Image+Here" alt="AEGIS Framework">
-        <p>Figure 1: Overview of the AEGIS Framework.</p>
-    </div>
+        <div class="action-buttons">
+            <a href="https://www.tsinghua.edu.cn/" class="btn"><i class="fas fa-file-pdf"></i> Paper</a>
+            <a href="https://github.com/" class="btn"><i class="fab fa-github"></i> Code</a>
+            <a href="#" class="btn"><i class="fas fa-play-circle"></i> Demo</a>
+        </div>
+    </header>
 
-    <div class="abstract">
-        <h3>Abstract</h3>
+    <section>
+        <h2>Overview</h2>
+        <div class="figure-container">
+            <img src="https://via.placeholder.com/800x400?text=Pipeline+Figure+(GIF/PNG)" alt="Method Overview">
+            <p class="caption">Figure 1: The overall framework of our proposed method.</p>
+        </div>
         <p>
-            Vision-Language-Action (VLA) models have demonstrated remarkable capabilities... 
-            In this work, we introduce the Vision-Language-Safe Action (VLSA) architecture. 
-            Central to this framework is <strong>AEGIS</strong>, a plug-and-play safety constraint layer...
+            Here is the abstract of our paper. balabala.
         </p>
-    </div>
+        <p>
+            We introduce <strong>MyMethod</strong>, which achieves ...
+        </p>
+    </section>
 
-    <h3>Results</h3>
-    <p>
-        We evaluate the efficacy of our approach on the LIBERO-SAFE benchmark...
-        Notably, AEGIS achieves a <strong>59.29%</strong> improvement in obstacle avoidance success rate...
-    </p>
+    <section>
+        <h2>Key Results</h2>
+        <div class="results-grid">
+            <div class="result-card">
+                <span class="value">85.5%</span>
+                <div class="label">Success Rate</div>
+                <div class="sub-label">vs. Baseline 60.2%</div>
+            </div>
+            <div class="result-card">
+                <span class="value">32x</span>
+                <div class="label">Safety Improvement</div>
+                <div class="sub-label">In extreme scenarios</div>
+            </div>
+            <div class="result-card">
+                <span class="value">+5.4%</span>
+                <div class="label">Generalization</div>
+                <div class="sub-label">On unseen objects</div>
+            </div>
+        </div>
+        <p>
+            Quantitative analysis shows that our method significantly outperforms existing baselines across all metrics.
+        </p>
+    </section>
+
+    <section>
+        <h2>Demonstrations</h2>
+        <p>Below are qualitative comparisons between our method and the baseline.</p>
+
+        <div class="demo-block">
+            <div class="demo-title">Task 1: Navigation in Cluttered Environment</div>
+            <div class="video-compare">
+                <div class="video-item">
+                    <video autoplay loop muted playsinline poster="https://via.placeholder.com/400x300?text=Baseline+Video">
+                        <source src="your-video-baseline.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-label">Baseline (Fail)</div>
+                </div>
+                <div class="video-item">
+                    <video autoplay loop muted playsinline poster="https://via.placeholder.com/400x300?text=Ours+Video">
+                        <source src="your-video-ours.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
+                </div>
+            </div>
+            <p class="caption" style="text-align: left; margin-top: 10px;">
+                <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
+            </p>
+        </div>
+
+        <div class="demo-block">
+            <div class="demo-title">Task 2: Manipulation of Fragile Objects</div>
+            <div class="video-compare">
+                <div class="video-item">
+                    <img src="https://via.placeholder.com/400x300?text=Baseline+GIF" alt="Baseline">
+                    <div class="video-label">Baseline</div>
+                </div>
+                <div class="video-item">
+                    <img src="https://via.placeholder.com/400x300?text=Ours+GIF" alt="Ours">
+                    <div class="video-label" style="color: var(--accent-color);">Ours</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>BibTeX</h2>
+        <pre><code>@inproceedings{zhang2025safevla,
+  title={This is a title},
+  author={Zhang, San and Li, Si},
+  booktitle={Conference on Neural Information Processing Systems (NeurIPS)},
+  year={2025}
+}</code></pre>
+    </section>
+
+    <footer>
+        <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            <br>
+            Template inspired by <a href="https://pku-safevla.github.io/">SafeVLA</a>.
+        </p>
+    </footer>
+</div>
 
 </body>
 </html>
