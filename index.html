@@ -26,12 +26,11 @@
             padding: 0;
         }
 
-        /* 布局容器 */
         .container {
             max-width: var(--max-width);
             margin: 0 auto;
             padding: 20px;
-            text-align: center; /* 默认居中，正文再左对齐 */
+            text-align: center;
         }
 
         /* 标题部分 */
@@ -86,7 +85,6 @@
             margin: 0 10px;
         }
 
-        /* paper和code的链接 */
         .action-buttons {
             display: flex;
             justify-content: center;
@@ -115,10 +113,9 @@
             margin-right: 8px;
         }
 
-        /* 章节通用样式 */
         section {
             margin-bottom: 50px;
-            text-align: justify; /* 正文两端对齐 */
+            text-align: justify;
         }
 
         section h2 {
@@ -135,7 +132,6 @@
             font-size: 1.05rem;
         }
 
-        /* 图片与图注 */
         .figure-container {
             text-align: center;
             margin: 30px 0;
@@ -155,7 +151,7 @@
             font-style: italic;
         }
 
-        /* 关键结果展示 (Key Results) */
+        /* Key Results */
         .results-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -190,7 +186,7 @@
             color: #666;
         }
 
-        /* 视频演示对比 (Demos) */
+        /* 视频演示对比 */
         .demo-block {
             margin-bottom: 40px;
         }
@@ -212,24 +208,26 @@
         }
 
         .video-item {
-            flex: 1;
+            flex: 0 1 400px;
             min-width: 300px;
+            margin: 0 auto; 
+
         }
 
         .video-item video {
-            width: 100%;
+            width: 100%; 
             border-radius: 8px;
             border: 1px solid #ddd;
+            display: block; 
         }
 
         .video-label {
             text-align: center;
             font-weight: 600;
-            margin-top: 5px;
+            margin-top: 8px;
             color: #444;
         }
 
-        /* 代码块 (BibTeX) */
         pre {
             background-color: #f4f4f4;
             padding: 20px;
@@ -240,7 +238,6 @@
             border: 1px solid #ddd;
         }
 
-        /* 页脚 */
         footer {
             margin-top: 60px;
             padding: 30px 0;
@@ -250,12 +247,13 @@
             border-top: 1px solid #eee;
         }
 
-        /* 响应式调整 */
         @media (max-width: 768px) {
             h1 { font-size: 1.8rem; }
             .btn { width: 100%; justify-content: center; margin-bottom: 10px; }
             .action-buttons { flex-direction: column; gap: 10px; }
+            .video-item { min-width: 100%; } 
         }
+
     </style>
 </head>
 <body>
@@ -330,28 +328,234 @@
         <p>Below are qualitative comparisons between our method and the baseline.</p>
 
         <div class="demo-block">
-            <div class="demo-title">Task 1: Navigation in Cluttered Environment</div>
+            <div class="demo-title">Task 1: Put both the alphabet soup and the tomato sauce in the basket</div>
+
             <div class="video-compare">
+
                 <div class="video-item">
-                    <video autoplay loop muted playsinline poster="https://via.placeholder.com/400x300?text=Baseline+Video">
-                        <source src="your-video-baseline.mp4" type="video/mp4">
+                    <video autoplay loop muted playsinline>
+                        <source src="task1_baseline_failure.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
                     </video>
                     <div class="video-label">Baseline (Fail)</div>
                 </div>
+
                 <div class="video-item">
-                    <video autoplay loop muted playsinline poster="https://via.placeholder.com/400x300?text=Ours+Video">
-                        <source src="your-video-ours.mp4" type="video/mp4">
+                    <video autoplay loop muted playsinline>
+                        <source src="task1_ours_success.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
                     </video>
                     <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
                 </div>
+
             </div>
+            
             <p class="caption" style="text-align: left; margin-top: 10px;">
                 <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
             </p>
         </div>
 
         <div class="demo-block">
-            <div class="demo-title">Task 2: Manipulation of Fragile Objects</div>
+            <div class="demo-title">Task 2: Put the white mug on the plate and put the chocolate pudding to the right of the plate</div>
+
+            <div class="video-compare">
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task2_baseline_failure.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label">Baseline (Fail)</div>
+                </div>
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task2_ours_success.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
+                </div>
+
+            </div>
+            
+            <p class="caption" style="text-align: left; margin-top: 10px;">
+                <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
+            </p>
+        </div>
+
+        <div class="demo-block">
+            <div class="demo-title">Task 3: Open the top drawer and put the bowl inside</div>
+
+            <div class="video-compare">
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task3_baseline_failure.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label">Baseline (Fail)</div>
+                </div>
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task3_ours_success.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
+                </div>
+
+            </div>
+            
+            <p class="caption" style="text-align: left; margin-top: 10px;">
+                <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
+            </p>
+        </div>
+
+        <div class="demo-block">
+            <div class="demo-title">Task 4: Put the bowl on the stove</div>
+
+            <div class="video-compare">
+
+                <div class="video-item">
+
+                    <video autoplay loop muted playsinline>
+                        <source src="task4_baseline_failure.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label">Baseline (Fail)</div>
+                </div>
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task4_ours_success.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
+                </div>
+
+            </div>
+            
+            <p class="caption" style="text-align: left; margin-top: 10px;">
+                <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
+            </p>
+        </div>
+
+        <div class="demo-block">
+            <div class="demo-title">Task 5: Pick up the bbq sauce and place it in the basket</div>
+
+            <div class="video-compare">
+
+                <div class="video-item">
+
+                    <video autoplay loop muted playsinline>
+                        <source src="task5_baseline_failure.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label">Baseline (Fail)</div>
+                </div>
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task5_ours_success.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
+                </div>
+
+            </div>
+            
+            <p class="caption" style="text-align: left; margin-top: 10px;">
+                <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
+            </p>
+        </div>
+
+        <div class="demo-block">
+            <div class="demo-title">Task 6: Pick up the milk and place it in the basket</div>
+
+            <div class="video-compare">
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task6_baseline_failure.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label">Baseline (Fail)</div>
+                </div>
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task6_ours_success.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
+                </div>
+
+            </div>
+            
+            <p class="caption" style="text-align: left; margin-top: 10px;">
+                <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
+            </p>
+        </div>
+
+        <div class="demo-block">
+            <div class="demo-title">Task 7: Pick up the black bowl between the plate and the ramekin and place it on the plate</div>
+
+            <div class="video-compare">
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task7_baseline_failure.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label">Baseline (Fail)</div>
+                </div>
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task7_ours_success.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
+                </div>
+
+            </div>
+            
+            <p class="caption" style="text-align: left; margin-top: 10px;">
+                <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
+            </p>
+        </div>
+
+        <div class="demo-block">
+            <div class="demo-title">Task 8: Pick up the black bowl on the wooden cabinet and place it on the plate</div>
+            
+            <div class="video-compare">
+                
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task8_baseline_failure.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label">Baseline (Fail)</div>
+                </div>
+
+                <div class="video-item">
+                    <video autoplay loop muted playsinline>
+                        <source src="task8_ours_success.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-label" style="color: var(--accent-color);">Ours (Success)</div>
+                </div>
+
+            </div>
+            
+            <p class="caption" style="text-align: left; margin-top: 10px;">
+                <strong>Analysis:</strong> The baseline agent gets stuck at the corner, while our agent successfully navigates through the obstacles.
+            </p>
+        </div>
+
+        <!-- GIF 演示区域 -->
+        <div class="demo-block">
+            <div class="demo-title">Here is for GIF</div>
             <div class="video-compare">
                 <div class="video-item">
                     <img src="https://via.placeholder.com/400x300?text=Baseline+GIF" alt="Baseline">
@@ -385,4 +589,5 @@
 </div>
 
 </body>
+
 </html>
