@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Awesome Paper - Project Page</title>
+    <title>AEGIS: Vision-Language-Safe Action Architecture</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -11,7 +11,8 @@
         :root {
             --primary-color: #333;
             --accent-color: #209cee; 
-            --link-color: #007bff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
             --bg-color: #ffffff;
             --text-color: #2c3e50;
             --max-width: 1100px;
@@ -32,12 +33,13 @@
             padding: 20px;
         }
 
+        /* --- Header Styles --- */
         header { padding: 40px 0; text-align: center; }
         h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; line-height: 1.2; color: #000; }
         .conference-badge { display: inline-block; background-color: #e0f7fa; color: #006064; padding: 5px 12px; border-radius: 15px; font-weight: 600; font-size: 0.9rem; margin-bottom: 20px; border: 1px solid #b2ebf2; }
         .authors { font-size: 1.1rem; margin-bottom: 15px; }
         .authors a { color: #333; text-decoration: none; margin: 0 8px; font-weight: 500; }
-        .authors a:hover { text-decoration: underline; color: var(--link-color); }
+        .authors a:hover { text-decoration: underline; color: var(--accent-color); }
         .affiliations { font-size: 0.9rem; color: #666; margin-bottom: 25px; }
         .affiliations span { margin: 0 10px; }
 
@@ -46,10 +48,12 @@
         .btn:hover { background-color: #000; transform: translateY(-2px); }
         .btn i { margin-right: 8px; }
 
+        /* --- Section General --- */
         section { margin-bottom: 60px; text-align: justify; }
         section h2 { font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
         p { margin-bottom: 15px; font-size: 1.05rem; }
 
+        /* --- Figures & Results --- */
         .figure-container { text-align: center; margin: 30px 0; }
         .figure-container img { max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .caption { margin-top: 10px; font-size: 0.9rem; color: #555; text-align: center; font-style: italic; }
@@ -60,109 +64,126 @@
         .result-card .label { font-size: 0.9rem; font-weight: 600; color: #333; }
         .result-card .sub-label { font-size: 0.8rem; color: #666; }
 
+        /* --- NEW Carousel Styles (关键修改) --- */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+        }
 
-        .model-row {
-            margin-bottom: 35px;
-            padding: 15px;
-            background: #fafafa;
+        /* 隐藏滚动条 */
+        .carousel-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory; /* 强制吸附 */
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding-bottom: 20px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .carousel-track::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
+
+        /* 每一个任务卡片：占满 100% 宽度 */
+        .carousel-item {
+            flex: 0 0 100%; 
+            scroll-snap-align: start;
+            background: #fff;
             border-radius: 12px;
             border: 1px solid #eee;
-        }
-
-        .row-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .model-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .badge {
-            font-size: 0.75rem;
-            background: #e0e0e0;
-            color: #555;
-            padding: 4px 10px;
-            border-radius: 6px;
-            margin-left: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .scroll-container {
-            display: flex;             
-            overflow-x: auto;            
-            gap: 15px;                  
-            padding-bottom: 12px;       
-            scroll-behavior: smooth;
-            scrollbar-width: thin;
-            scrollbar-color: #bbb #f0f0f0;
-        }
-
-        .scroll-container::-webkit-scrollbar { height: 8px; }
-        .scroll-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
-        .scroll-container::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
-        .scroll-container::-webkit-scrollbar-thumb:hover { background: #999; }
-
-        .grid-item {
-            flex: 0 0 260px; 
-            
-            background: #fff;
-            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             overflow: hidden;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease;
+            position: relative;
         }
 
-        .grid-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .task-header-overlay {
+            background: #f8f9fa;
+            color: #333;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1rem;
         }
 
-        /* 视频和图片共用样式 */
-        .grid-item img, 
-        .grid-item video {
+        /* 三列视频布局 Grid */
+        .video-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 三等分 */
+            gap: 2px;
+            background: #fff;
+        }
+
+        .video-col {
+            position: relative;
+            background: #000;
+        }
+
+        .video-col video {
             width: 100%;
-            height: 160px;   
+            height: 220px; /* 固定高度，确保对齐 */
             object-fit: cover;
             display: block;
         }
 
-        .task-name {
-            font-size: 0.8rem;
-            padding: 8px 10px;
-            text-align: center;
-            color: #555;
-            background: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            border-top: 1px solid #eee;
-            font-weight: 500;
+        /* 方法标签 */
+        .method-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+            backdrop-filter: blur(2px);
         }
 
-        .model-row.ours {
-            background: #f0f9ff; 
-            border: 1px solid #b3d7ff;
-        }
-        
-        .model-row.ours .model-title {
-            color: var(--accent-color);
+        /* Baseline 失败标签 */
+        .method-label.failure {
+            border-left: 3px solid var(--danger-color);
         }
 
-        .model-row.ours .badge {
-            background: var(--accent-color);
-            color: white;
+        /* Ours 成功标签 */
+        .method-label.ours {
+            background: var(--accent-color); /* 蓝色背景 */
+            border-left: 3px solid #fff;
         }
 
+        /* 状态指示条 (底部红/绿线) */
+        .status-bar {
+            height: 4px;
+            width: 100%;
+        }
+        .status-bar.fail { background-color: var(--danger-color); }
+        .status-bar.success { background-color: var(--success-color); }
+
+        /* 左右导航按钮 */
+        .nav-btn {
+            position: absolute;
+            top: 55%; /* 稍微偏下，对齐视频中心 */
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            border: 1px solid #ddd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-btn:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
+        .prev-btn { left: -20px; }
+        .next-btn { right: -20px; }
+
+        /* --- Footer & Misc --- */
         pre {
             background-color: #f4f4f4;
             padding: 20px;
@@ -182,12 +203,17 @@
             border-top: 1px solid #eee;
         }
 
+        /* Mobile Adaptation */
         @media (max-width: 768px) {
             h1 { font-size: 1.8rem; }
             .btn { width: 100%; justify-content: center; margin-bottom: 10px; }
             .action-buttons { flex-direction: column; gap: 10px; }
-            .grid-item { flex: 0 0 220px; } 
-            .grid-item img, .grid-item video { height: 140px; }
+            
+            /* 手机上隐藏左右按钮，直接滑动 */
+            .nav-btn { display: none; }
+            .video-col video { height: 140px; } /* 视频变矮 */
+            .method-label { font-size: 0.6rem; padding: 2px 5px; }
+            .carousel-track { padding-bottom: 10px; }
         }
 
     </style>
@@ -196,9 +222,9 @@
 
 <div class="container">
     <header>
-        <div class="conference-badge">xxx</div>
+        <div class="conference-badge">NeurIPS 2025 Spotlight (Mock)</div>
         
-        <h1>This is a title!</h1>
+        <h1>AEGIS: Vision-Language-Safe Action Architecture</h1>
         
         <div class="authors">
             <a href="#">Songqiao Hu<sup>1,*</sup></a>
@@ -236,7 +262,7 @@
             <p class="caption">Figure 1: The overall framework of our proposed method.</p>
         </div>
         <p>
-            Here is the abstract of our paper. balabala. We introduce <strong>MyMethod</strong>, which achieves state-of-the-art performance in complex manipulation tasks.
+            Here is the abstract of our paper. We introduce <strong>AEGIS</strong>, a plug-and-play safety constraint layer formulated via control barrier functions.
         </p>
     </section>
 
@@ -262,135 +288,106 @@
     </section>
 
     <section>
-        <h2>Demonstrations</h2>
-        <p style="text-align: center; margin-bottom: 30px; color: #666;">
-            Scroll horizontally to view all results across different tasks.<br>
-            Each column represents the same task configuration for comparison.
+        <h2>Qualitative Comparisons</h2>
+        <p style="text-align: center; margin-bottom: 25px; color: #666;">
+            We compare <strong>OpenVLA</strong>, <strong>$\pi_{0.5}$</strong>, and <strong>Ours (AEGIS)</strong> across different tasks.<br>
+            <span style="font-size: 0.9rem; color: #888;">
+                <i class="fas fa-hand-pointer"></i> Swipe or click arrows to view more tasks.
+            </span>
         </p>
 
-        <div class="model-row">
-            <div class="row-header">
-                <div class="model-title">openvla</div>
-            </div>
-            
-            <div class="scroll-container">
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video>
-                    <div class="task-name">Task 1</div>
+        <div class="carousel-wrapper">
+            <button class="nav-btn prev-btn" onclick="scrollCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn next-btn" onclick="scrollCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+
+            <div class="carousel-track" id="taskCarousel">
+                
+                <div class="carousel-item">
+                    <div class="task-header-overlay">Task 1: Pick up the cup</div>
+                    <div class="video-group">
+                        <div class="video-col">
+                            <div class="method-label failure">OpenVLA</div>
+                            <video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                        </div>
+                        <div class="video-col">
+                            <div class="method-label failure">$\pi_{0.5}$</div>
+                            <video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                        </div>
+                        <div class="video-col">
+                            <div class="method-label ours">Ours (AEGIS)</div>
+                            <video autoplay loop muted playsinline src="task1_ours_success.mp4"></video>
+                            <div class="status-bar success"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video>
-                    <div class="task-name">Task 2</div>
+
+                <div class="carousel-item">
+                    <div class="task-header-overlay">Task 2: Put bowl on plate</div>
+                    <div class="video-group">
+                        <div class="video-col">
+                            <div class="method-label failure">OpenVLA</div>
+                            <video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                        </div>
+                        <div class="video-col">
+                            <div class="method-label failure">$\pi_{0.5}$</div>
+                            <video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                        </div>
+                        <div class="video-col">
+                            <div class="method-label ours">Ours (AEGIS)</div>
+                            <video autoplay loop muted playsinline src="task2_ours_success.mp4"></video>
+                            <div class="status-bar success"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video>
-                    <div class="task-name">Task 3</div>
+
+                <div class="carousel-item">
+                    <div class="task-header-overlay">Task 3: Object in drawer</div>
+                    <div class="video-group">
+                        <div class="video-col">
+                            <div class="method-label failure">OpenVLA</div>
+                            <video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                        </div>
+                        <div class="video-col">
+                            <div class="method-label failure">$\pi_{0.5}$</div>
+                            <video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                        </div>
+                        <div class="video-col">
+                            <div class="method-label ours">Ours (AEGIS)</div>
+                            <video autoplay loop muted playsinline src="task3_ours_success.mp4"></video>
+                            <div class="status-bar success"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video>
-                    <div class="task-name">Task 4</div>
+                
+                <div class="carousel-item">
+                    <div class="task-header-overlay">Task 4: Description here</div>
+                    <div class="video-group">
+                        <div class="video-col">
+                            <div class="method-label failure">OpenVLA</div>
+                            <video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                        </div>
+                        <div class="video-col">
+                            <div class="method-label failure">$\pi_{0.5}$</div>
+                            <video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                        </div>
+                        <div class="video-col">
+                            <div class="method-label ours">Ours (AEGIS)</div>
+                            <video autoplay loop muted playsinline src="task4_ours_success.mp4"></video>
+                            <div class="status-bar success"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video>
-                    <div class="task-name">Task 5</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video>
-                    <div class="task-name">Task 6</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video>
-                    <div class="task-name">Task 7</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video>
-                    <div class="task-name">Task 8</div>
-                </div>
+
             </div>
         </div>
-
-        <div class="model-row">
-            <div class="row-header">
-                <div class="model-title">pi_0.5</div>
-            </div>
-            
-            <div class="scroll-container">
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video>
-                    <div class="task-name">Task 1</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video>
-                    <div class="task-name">Task 2</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video>
-                    <div class="task-name">Task 3</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video>
-                    <div class="task-name">Task 4</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video>
-                    <div class="task-name">Task 5</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video>
-                    <div class="task-name">Task 6</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video>
-                    <div class="task-name">Task 7</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video>
-                    <div class="task-name">Task 8</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="model-row ours">
-            <div class="row-header">
-                <div class="model-title">Ours</div>
-            </div>
-            
-            <div class="scroll-container">
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task1_ours_success.mp4"></video>
-                    <div class="task-name">Task 1</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task2_ours_success.mp4"></video>
-                    <div class="task-name">Task 2</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task3_ours_success.mp4"></video>
-                    <div class="task-name">Task 3</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task4_ours_success.mp4"></video>
-                    <div class="task-name">Task 4</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task5_ours_success.mp4"></video>
-                    <div class="task-name">Task 5</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task6_ours_success.mp4"></video>
-                    <div class="task-name">Task 6</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task7_ours_success.mp4"></video>
-                    <div class="task-name">Task 7</div>
-                </div>
-                <div class="grid-item">
-                    <video autoplay loop muted playsinline src="task8_ours_success.mp4"></video>
-                    <div class="task-name">Task 8</div>
-                </div>
-            </div>
-        </div>
-
     </section>
 
     <section>
@@ -413,15 +410,28 @@
 </div>
 
 <script>
+    // 1. 视频倍速控制
     document.addEventListener('DOMContentLoaded', function() {
-        // 获取页面上所有的 video 标签
         var videos = document.querySelectorAll('video');
-        
-        // 遍历设置倍速
         videos.forEach(function(video) {
-            video.playbackRate = 3.0; // 这里可以修改倍速，例如 1.5 或 3.0
+            video.playbackRate = 3.0; // 3倍速播放
         });
     });
+
+    // 2. 轮播控制脚本
+    function scrollCarousel(direction) {
+        const track = document.getElementById('taskCarousel');
+        const item = track.querySelector('.carousel-item');
+        if (!item) return;
+
+        // 获取单个卡片的完整宽度（包括gap）
+        const scrollAmount = item.offsetWidth + 20; // 20 is gap
+        
+        track.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
 </script>
 
 </body>
