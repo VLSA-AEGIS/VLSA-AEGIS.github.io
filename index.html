@@ -93,7 +93,7 @@
             position: relative;
         }
 
-        /* ====== 左对齐标题样式 ====== */
+        /* 左对齐标题样式 */
         .task-header-overlay {
             background: #ffffff;
             color: #333;
@@ -123,12 +123,11 @@
             background: #fff;
         }
 
-        /* ====== 修改：Video Column 样式 ====== */
         .video-col {
             position: relative;
-            background: #fff; /* 改为白色背景 */
+            background: #fff;
             display: flex;
-            flex-direction: column; /* 垂直排列：视频在上，文字在下 */
+            flex-direction: column;
         }
 
         .video-col video {
@@ -136,14 +135,14 @@
             height: 220px;
             object-fit: cover;
             display: block;
-            background: #000; /* 视频未加载时显示黑底 */
+            background: #000;
         }
 
-        /* ====== 修改：方法标签样式 (移到下方) ====== */
+        /* 方法标签 (下方) */
         .method-label {
-            position: static; /* 取消绝对定位 */
-            margin-top: 8px;  /* 顶部间距 */
-            margin-bottom: 8px; /* 底部间距 */
+            position: static;
+            margin-top: 8px;
+            margin-bottom: 8px;
             text-align: center;
             font-size: 0.95rem;
             color: #555;
@@ -153,13 +152,12 @@
             border: none;
         }
 
-        /* 高亮 Ours 的文字 */
         .method-label.ours {
             color: var(--accent-color);
             font-weight: 800;
         }
 
-        /* 状态条 (保留在视频底部作为分割线) */
+        /* 状态条 */
         .status-bar {
             height: 4px;
             width: 100%;
@@ -369,7 +367,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="carousel-item">
                     <div class="task-header-overlay">Task 4: Description here</div>
                     <div class="video-group">
@@ -385,6 +383,90 @@
                         </div>
                         <div class="video-col">
                             <video autoplay loop muted playsinline src="task4_ours_success.mp4"></video>
+                            <div class="status-bar success"></div>
+                            <div class="method-label ours">Ours (AEGIS)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="task-header-overlay">Task 5: Description here</div>
+                    <div class="video-group">
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                            <div class="method-label failure">OpenVLA</div>
+                        </div>
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                            <div class="method-label failure">$\pi_{0.5}$</div>
+                        </div>
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task5_ours_success.mp4"></video>
+                            <div class="status-bar success"></div>
+                            <div class="method-label ours">Ours (AEGIS)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="task-header-overlay">Task 6: Description here</div>
+                    <div class="video-group">
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                            <div class="method-label failure">OpenVLA</div>
+                        </div>
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                            <div class="method-label failure">$\pi_{0.5}$</div>
+                        </div>
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task6_ours_success.mp4"></video>
+                            <div class="status-bar success"></div>
+                            <div class="method-label ours">Ours (AEGIS)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="task-header-overlay">Task 7: Description here</div>
+                    <div class="video-group">
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                            <div class="method-label failure">OpenVLA</div>
+                        </div>
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                            <div class="method-label failure">$\pi_{0.5}$</div>
+                        </div>
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task7_ours_success.mp4"></video>
+                            <div class="status-bar success"></div>
+                            <div class="method-label ours">Ours (AEGIS)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="task-header-overlay">Task 8: Description here</div>
+                    <div class="video-group">
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                            <div class="method-label failure">OpenVLA</div>
+                        </div>
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video>
+                            <div class="status-bar fail"></div>
+                            <div class="method-label failure">$\pi_{0.5}$</div>
+                        </div>
+                        <div class="video-col">
+                            <video autoplay loop muted playsinline src="task8_ours_success.mp4"></video>
                             <div class="status-bar success"></div>
                             <div class="method-label ours">Ours (AEGIS)</div>
                         </div>
