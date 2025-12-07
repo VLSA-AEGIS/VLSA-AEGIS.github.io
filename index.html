@@ -98,9 +98,9 @@
 
         .scroll-container {
             display: flex;             
-            overflow-x: auto;           
+            overflow-x: auto;            
             gap: 15px;                  
-            padding-bottom: 12px;      
+            padding-bottom: 12px;       
             scroll-behavior: smooth;
             scrollbar-width: thin;
             scrollbar-color: #bbb #f0f0f0;
@@ -127,10 +127,12 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .grid-item img {
+        /* --- 修改点 1: 将 video 标签也加入样式控制 --- */
+        .grid-item img, 
+        .grid-item video {
             width: 100%;
             height: 160px;   
-            object-fit: cover; 
+            object-fit: cover; /* 保证视频填满框且不变形 */
             display: block;
         }
 
@@ -185,7 +187,7 @@
             .btn { width: 100%; justify-content: center; margin-bottom: 10px; }
             .action-buttons { flex-direction: column; gap: 10px; }
             .grid-item { flex: 0 0 220px; } 
-            .grid-item img { height: 140px; }
+            .grid-item img, .grid-item video { height: 140px; } /* 同样应用于 video */
         }
 
     </style>
@@ -265,35 +267,35 @@
             
             <div class="scroll-container">
                 <div class="grid-item">
-                    <img src="task1_openvla_failure.mp4" alt="Task 1">
+                    <video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video>
                     <div class="task-name">Task 1</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task2_openvla_failure.mp4" alt="Task 2">
+                    <video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video>
                     <div class="task-name">Task 2</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task3_openvla_failure.mp4" alt="Task 3">
+                    <video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video>
                     <div class="task-name">Task 3</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task4_openvla_failure.mp4" alt="Task 4">
+                    <video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video>
                     <div class="task-name">Task 4</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task5_openvla_failure.mp4" alt="Task 5">
+                    <video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video>
                     <div class="task-name">Task 5</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task6_openvla_failure.mp4" alt="Task 6">
+                    <video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video>
                     <div class="task-name">Task 6</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task7_openvla_failure.mp4" alt="Task 7">
+                    <video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video>
                     <div class="task-name">Task 7</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task8_openvla_failure.mp4" alt="Task 8">
+                    <video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video>
                     <div class="task-name">Task 8</div>
                 </div>
             </div>
@@ -306,35 +308,35 @@
             
             <div class="scroll-container">
                 <div class="grid-item">
-                    <img src="task1_pi0.5_failure.mp4" alt="Task 1">
+                    <video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video>
                     <div class="task-name">Task 1</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task2_pi0.5_failure.mp4" alt="Task 2">
+                    <video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video>
                     <div class="task-name">Task 2</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task3_pi0.5_failure.mp4" alt="Task 3">
+                    <video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video>
                     <div class="task-name">Task 3</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task4_pi0.5_failure.mp4" alt="Task 4">
+                    <video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video>
                     <div class="task-name">Task 4</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task5_pi0.5_failure.mp4" alt="Task 5">
+                    <video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video>
                     <div class="task-name">Task 5</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task6_pi0.5_failure.mp4" alt="Task 6">
+                    <video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video>
                     <div class="task-name">Task 6</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task7_pi0.5_failure.mp4" alt="Task 7">
+                    <video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video>
                     <div class="task-name">Task 7</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task8_pi0.5_failure.mp4" alt="Task 8">
+                    <video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video>
                     <div class="task-name">Task 8</div>
                 </div>
             </div>
@@ -347,35 +349,35 @@
             
             <div class="scroll-container">
                 <div class="grid-item">
-                    <img src="task1_ours_success.mp4" alt="Task 1">
+                    <video autoplay loop muted playsinline src="task1_ours_success.mp4"></video>
                     <div class="task-name">Task 1</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task2_ours_success.mp4" alt="Task 2">
+                    <video autoplay loop muted playsinline src="task2_ours_success.mp4"></video>
                     <div class="task-name">Task 2</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task3_ours_success.mp4" alt="Task 3">
+                    <video autoplay loop muted playsinline src="task3_ours_success.mp4"></video>
                     <div class="task-name">Task 3</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task4_ours_success.mp4" alt="Task 4">
+                    <video autoplay loop muted playsinline src="task4_ours_success.mp4"></video>
                     <div class="task-name">Task 4</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task5_ours_success.mp4" alt="Task 5">
+                    <video autoplay loop muted playsinline src="task5_ours_success.mp4"></video>
                     <div class="task-name">Task 5</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task6_ours_success.mp4" alt="Task 6">
+                    <video autoplay loop muted playsinline src="task6_ours_success.mp4"></video>
                     <div class="task-name">Task 6</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task7_ours_success.mp4" alt="Task 7">
+                    <video autoplay loop muted playsinline src="task7_ours_success.mp4"></video>
                     <div class="task-name">Task 7</div>
                 </div>
                 <div class="grid-item">
-                    <img src="task8_ours_success.mp4" alt="Task 8">
+                    <video autoplay loop muted playsinline src="task8_ours_success.mp4"></video>
                     <div class="task-name">Task 8</div>
                 </div>
             </div>
