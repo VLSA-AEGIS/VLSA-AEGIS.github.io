@@ -15,7 +15,7 @@
             --danger-color: #dc3545;
             --bg-color: #ffffff;
             --text-color: #2c3e50;
-            --max-width: 1200px; /* 加宽以容纳3列视频 */
+            --max-width: 1100px;
         }
 
         body {
@@ -33,7 +33,7 @@
             padding: 20px;
         }
 
-        /* --- Header & General --- */
+        /* --- Header Styles --- */
         header { padding: 40px 0; text-align: center; }
         h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; line-height: 1.2; color: #000; }
         .conference-badge { display: inline-block; background-color: #e0f7fa; color: #006064; padding: 5px 12px; border-radius: 15px; font-weight: 600; font-size: 0.9rem; margin-bottom: 20px; border: 1px solid #b2ebf2; }
@@ -42,6 +42,7 @@
         .authors a:hover { text-decoration: underline; color: var(--accent-color); }
         .affiliations { font-size: 0.9rem; color: #666; margin-bottom: 25px; }
         .affiliations span { margin: 0 10px; }
+
         .action-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
         .btn { display: inline-flex; align-items: center; background-color: #333; color: white; padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: transform 0.2s, background-color 0.2s; }
         .btn:hover { background-color: #000; transform: translateY(-2px); }
@@ -61,134 +62,148 @@
         .result-card .label { font-size: 0.9rem; font-weight: 600; color: #333; }
         .result-card .sub-label { font-size: 0.8rem; color: #666; }
 
-        /* ========================================= */
-        /* 核心样式：5 Episodes x 3 Methods     */
-        /* ========================================= */
+        /* ================================================= */
+        /* Carousel Styles (Task Row -> Horizontal Episodes) */
+        /* ================================================= */
         
         .task-block {
-            margin-bottom: 60px; /* 任务间距 */
-            border: 1px solid #eee;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 50px; /* 垂直间距：任务与任务之间 */
         }
 
         /* 标题样式：左侧蓝条 */
         .task-header {
             background: #ffffff;
             color: #333;
-            padding: 15px 20px;
+            padding: 10px 0;
+            margin-bottom: 15px;
             text-align: left;
             font-weight: 800;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #eee;
         }
         .task-header::before {
             content: '';
             display: block;
             width: 6px;
-            height: 28px;
+            height: 24px;
             background-color: var(--accent-color);
             margin-right: 15px;
             border-radius: 3px;
             flex-shrink: 0;
         }
 
-        /* 网格布局：定义4列 (Label + 3 Videos) */
-        .comparison-grid {
-            display: grid;
-            /* 第一列窄一点放Episode号，后三列等宽 */
-            grid-template-columns: 80px 1fr 1fr 1fr; 
-            gap: 1px; /* 细缝 */
-            background: #e0e0e0; /* 缝隙颜色 */
-        }
-
-        /* 通用单元格样式 */
-        .grid-cell {
-            background: #fff;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        /* 轮播容器 */
+        .carousel-wrapper {
             position: relative;
+            background: #f8f9fa; /* 浅灰背景衬托 */
+            border-radius: 12px;
+            padding: 20px 0; /* 上下留白 */
+            border: 1px solid #eee;
+            overflow: hidden; /* 防止溢出 */
         }
 
-        /* 表头单元格 */
-        .col-header {
-            background: #f8f9fa;
+        /* 滑动轨道 */
+        .carousel-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory; /* 强制对齐，一滑一页 */
+            scroll-behavior: smooth;
+            gap: 20px; /* Episode 之间的间距 */
+            padding: 0 20px; /* 轨道左右留白 */
+            scrollbar-width: none; /* Firefox 隐藏滚动条 */
+        }
+        .carousel-track::-webkit-scrollbar { display: none; /* Chrome 隐藏滚动条 */ }
+
+        /* 单个 Episode 卡片 (核心：宽度 100% 占满容器) */
+        .episode-card {
+            flex: 0 0 100%; /* 这里设置为 100%，保证一次看一组(3个视频) */
+            scroll-snap-align: center; /* 滑动停止时自动居中 */
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 15px;
+            box-sizing: border-box;
+            border: 1px solid #eee;
+        }
+
+        .episode-label-tag {
+            text-align: center;
             font-weight: 700;
-            padding: 12px;
-            text-align: center;
             color: #555;
-            font-size: 0.95rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 8px;
         }
 
-        /* 侧边 Episode 标签 */
-        .row-header {
-            font-weight: 600;
-            color: #888;
-            font-size: 0.85rem;
-            writing-mode: vertical-rl; /* 竖排文字 (可选，如果觉得挤的话) */
-            transform: rotate(180deg); /* 竖排方向修正 */
-            text-align: center;
-            background: #fafafa;
-        }
-        /* 如果不想竖排，可以用下面的： */
-        .row-header.horizontal {
-            writing-mode: horizontal-tb;
-            transform: none;
+        /* 3个视频并排 Grid */
+        .video-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 三等分 */
+            gap: 10px;
         }
 
-        /* 视频样式 */
-        .grid-cell video {
+        .video-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .video-col video {
             width: 100%;
-            height: auto;
+            height: 180px; /* 固定高度，整齐划一 */
+            object-fit: cover;
             border-radius: 4px;
-            display: block;
             background: #000;
         }
 
-        /* --- 高亮 "Ours" 列 --- */
-        .col-header.ours {
-            background: #e6f7ff; /* 浅蓝表头 */
+        .method-label {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+        }
+        .method-label.ours {
             color: var(--accent-color);
-            font-size: 1.05rem;
+            font-weight: 800;
         }
-        .grid-cell.ours {
-            background: #f0f9ff; /* 浅蓝背景 */
+
+        /* 左右箭头按钮 */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            border: 1px solid #ddd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s;
         }
-        
+        .nav-btn:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
+        footer { margin-top: 60px; padding: 30px 0; text-align: center; color: #888; font-size: 0.85rem; border-top: 1px solid #eee; }
+
         /* 移动端适配 */
         @media (max-width: 768px) {
-            /* 手机上变成横向滚动，防止太挤 */
-            .comparison-grid {
-                display: flex;
-                overflow-x: auto;
-                grid-gap: 10px;
-                padding: 10px;
-                background: #fff;
-            }
-            .grid-col-group {
-                min-width: 250px; /* 手机上一列的宽度 */
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-            /* 这里为了简化，手机端适配可能需要更复杂的逻辑，
-               或者接受手机上3列变得很窄。
-               下面的 CSS 保持 Grid 但允许滚动 */
-            .task-block {
-                overflow-x: auto;
-            }
-            .comparison-grid {
-                min-width: 600px; /* 强制最小宽度，触发滚动 */
-            }
+            .nav-btn { display: none; } /* 手机上隐藏按钮，直接用手滑 */
+            .video-col video { height: 100px; } /* 视频变矮 */
+            .carousel-wrapper { padding: 10px 0; }
+            .episode-card { padding: 10px; }
+            .method-label { font-size: 0.7rem; }
         }
-        
-        footer { margin-top: 60px; padding: 30px 0; text-align: center; color: #888; font-size: 0.85rem; border-top: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -206,307 +221,233 @@
             <a href="#">Xiao He<sup>1,4†</sup></a>
         </div>
         <div class="affiliations">
-            <span><sup>1</sup>Department of Automation, Tsinghua University</span>
+            <span><sup>1</sup>Tsinghua University</span>
             <span><sup>2</sup>TetraBOT</span>
-            <span><sup>3</sup>DAMO Academy, Alibaba Group</span>
-            <span><sup>4</sup>IEIR, Tsinghua University</span>
+            <span><sup>3</sup>Alibaba Group</span>
         </div>
         <div class="action-buttons">
             <a href="#" class="btn"><i class="fas fa-file-pdf"></i> Paper</a>
             <a href="#" class="btn"><i class="fab fa-github"></i> Code</a>
-            <a href="#" class="btn"><i class="fas fa-play-circle"></i> Demo</a>
         </div>
     </header>
 
     <section>
         <h2>Overview</h2>
         <div class="figure-container">
-            <img src="https://via.placeholder.com/800x400?text=Pipeline+Figure" alt="Method Overview">
+            <img src="https://via.placeholder.com/800x400" alt="Method Overview">
             <p class="caption">Figure 1: Overall framework.</p>
         </div>
     </section>
 
     <section>
-        <h2>Qualitative Comparisons (5 Episodes)</h2>
+        <h2>Qualitative Comparisons</h2>
         <p style="text-align: center; margin-bottom: 40px; color: #666;">
-            We showcase <strong>5 consecutive episodes</strong> for each of the 8 tasks to demonstrate robustness.<br>
-            Comparison: <span style="color:#666">OpenVLA</span> vs <span style="color:#666">$\pi_{0.5}$</span> vs <span style="color:var(--accent-color); font-weight:bold;">Ours (AEGIS)</span>.
+            We compare <strong>OpenVLA</strong>, <strong>$\pi_{0.5}$</strong>, and <strong>Ours</strong> across 8 tasks.<br>
+            Each task contains <strong>5 Episodes</strong>. Swipe or click arrows to view different episodes.
         </p>
 
         <div class="task-block">
             <div class="task-header">Task 1: Pick up the cup</div>
-            <div class="comparison-grid">
-                <div class="col-header">Episode</div>
-                <div class="col-header">OpenVLA</div>
-                <div class="col-header">$\pi_{0.5}$</div>
-                <div class="col-header ours">Ours (AEGIS)</div>
-
-                <div class="grid-cell row-header horizontal">Ep 1</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 2</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 3</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 4</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 5</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video></div>
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                
+                <div class="carousel-track">
+                    <div class="episode-card">
+                        <div class="episode-label-tag">Episode 1</div>
+                        <div class="video-group">
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video><div class="method-label ours">Ours</div></div>
+                        </div>
+                    </div>
+                    <div class="episode-card">
+                        <div class="episode-label-tag">Episode 2</div>
+                        <div class="video-group">
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video><div class="method-label ours">Ours</div></div>
+                        </div>
+                    </div>
+                    <div class="episode-card">
+                        <div class="episode-label-tag">Episode 3</div>
+                        <div class="video-group">
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video><div class="method-label ours">Ours</div></div>
+                        </div>
+                    </div>
+                    <div class="episode-card">
+                        <div class="episode-label-tag">Episode 4</div>
+                        <div class="video-group">
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video><div class="method-label ours">Ours</div></div>
+                        </div>
+                    </div>
+                    <div class="episode-card">
+                        <div class="episode-label-tag">Episode 5</div>
+                        <div class="video-group">
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div>
+                            <div class="video-col"><video autoplay loop muted playsinline src="task1_ours_success.mp4"></video><div class="method-label ours">Ours</div></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="task-block">
             <div class="task-header">Task 2: Put bowl on plate</div>
-            <div class="comparison-grid">
-                <div class="col-header">Episode</div>
-                <div class="col-header">OpenVLA</div>
-                <div class="col-header">$\pi_{0.5}$</div>
-                <div class="col-header ours">Ours (AEGIS)</div>
-
-                <div class="grid-cell row-header horizontal">Ep 1</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 2</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 3</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 4</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 5</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video></div>
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-track">
+                    <div class="episode-card"><div class="episode-label-tag">Episode 1</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 2</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 3</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 4</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 5</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task2_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task2_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                </div>
             </div>
         </div>
 
         <div class="task-block">
             <div class="task-header">Task 3: Object in drawer</div>
-            <div class="comparison-grid">
-                <div class="col-header">Episode</div>
-                <div class="col-header">OpenVLA</div>
-                <div class="col-header">$\pi_{0.5}$</div>
-                <div class="col-header ours">Ours (AEGIS)</div>
-
-                <div class="grid-cell row-header horizontal">Ep 1</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video></div>
-                <div class="grid-cell row-header horizontal">Ep 2</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video></div>
-                <div class="grid-cell row-header horizontal">Ep 3</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video></div>
-                <div class="grid-cell row-header horizontal">Ep 4</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video></div>
-                <div class="grid-cell row-header horizontal">Ep 5</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video></div>
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-track">
+                    <div class="episode-card"><div class="episode-label-tag">Episode 1</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 2</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 3</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 4</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 5</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task3_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task3_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                </div>
             </div>
         </div>
 
         <div class="task-block">
             <div class="task-header">Task 4: Description here</div>
-            <div class="comparison-grid">
-                <div class="col-header">Episode</div><div class="col-header">OpenVLA</div><div class="col-header">$\pi_{0.5}$</div><div class="col-header ours">Ours (AEGIS)</div>
-                <div class="grid-cell row-header horizontal">Ep 1</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video></div>
-                
-                <div class="grid-cell row-header horizontal">Ep 2</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 3</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 4</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 5</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video></div>
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-track">
+                    <div class="episode-card"><div class="episode-label-tag">Episode 1</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 2</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 3</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 4</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 5</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task4_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task4_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                </div>
             </div>
         </div>
 
         <div class="task-block">
             <div class="task-header">Task 5: Description here</div>
-            <div class="comparison-grid">
-                <div class="col-header">Episode</div><div class="col-header">OpenVLA</div><div class="col-header">$\pi_{0.5}$</div><div class="col-header ours">Ours (AEGIS)</div>
-                <div class="grid-cell row-header horizontal">Ep 1</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 2</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 3</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 4</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 5</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video></div>
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-track">
+                    <div class="episode-card"><div class="episode-label-tag">Episode 1</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 2</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 3</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 4</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 5</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task5_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task5_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                </div>
             </div>
         </div>
 
         <div class="task-block">
             <div class="task-header">Task 6: Description here</div>
-            <div class="comparison-grid">
-                <div class="col-header">Episode</div><div class="col-header">OpenVLA</div><div class="col-header">$\pi_{0.5}$</div><div class="col-header ours">Ours (AEGIS)</div>
-                <div class="grid-cell row-header horizontal">Ep 1</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video></div>
-                
-                <div class="grid-cell row-header horizontal">Ep 2</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 3</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 4</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 5</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video></div>
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-track">
+                    <div class="episode-card"><div class="episode-label-tag">Episode 1</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 2</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 3</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 4</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 5</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task6_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task6_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                </div>
             </div>
         </div>
 
         <div class="task-block">
             <div class="task-header">Task 7: Description here</div>
-            <div class="comparison-grid">
-                <div class="col-header">Episode</div><div class="col-header">OpenVLA</div><div class="col-header">$\pi_{0.5}$</div><div class="col-header ours">Ours (AEGIS)</div>
-                <div class="grid-cell row-header horizontal">Ep 1</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video></div>
-                
-                <div class="grid-cell row-header horizontal">Ep 2</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 3</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 4</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 5</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video></div>
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-track">
+                    <div class="episode-card"><div class="episode-label-tag">Episode 1</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 2</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 3</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 4</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 5</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task7_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task7_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                </div>
             </div>
         </div>
 
         <div class="task-block">
             <div class="task-header">Task 8: Description here</div>
-            <div class="comparison-grid">
-                <div class="col-header">Episode</div><div class="col-header">OpenVLA</div><div class="col-header">$\pi_{0.5}$</div><div class="col-header ours">Ours (AEGIS)</div>
-                <div class="grid-cell row-header horizontal">Ep 1</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video></div>
-                
-                <div class="grid-cell row-header horizontal">Ep 2</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 3</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 4</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video></div>
-
-                <div class="grid-cell row-header horizontal">Ep 5</div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video></div>
-                <div class="grid-cell"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video></div>
-                <div class="grid-cell ours"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video></div>
+            <div class="carousel-wrapper">
+                <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-track">
+                    <div class="episode-card"><div class="episode-label-tag">Episode 1</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 2</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 3</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 4</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                    <div class="episode-card"><div class="episode-label-tag">Episode 5</div><div class="video-group"><div class="video-col"><video autoplay loop muted playsinline src="task8_openvla_failure.mp4"></video><div class="method-label">OpenVLA</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_pi0.5_failure.mp4"></video><div class="method-label">$\pi_{0.5}$</div></div><div class="video-col"><video autoplay loop muted playsinline src="task8_ours_success.mp4"></video><div class="method-label ours">Ours</div></div></div></div>
+                </div>
             </div>
         </div>
 
     </section>
 
-    <section><h2>BibTeX</h2><pre><code>@inproceedings{zhang2025safevla,
+    <section>
+        <h2>BibTeX</h2>
+        <pre><code>@inproceedings{zhang2025safevla,
   title={This is a title},
   author={Zhang, San and Li, Si},
   booktitle={Conference on Neural Information Processing Systems (NeurIPS)},
   year={2025}
-}</code></pre></section>
-    <footer><p>Template inspired by SafeVLA.</p></footer>
+}</code></pre>
+    </section>
+
+    <footer>
+        <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            <br>
+            Template inspired by <a href="https://pku-safevla.github.io/">SafeVLA</a>.
+        </p>
+    </footer>
 </div>
 
 <script>
+    // 1. 视频倍速控制 (可选)
     document.addEventListener('DOMContentLoaded', function() {
         var videos = document.querySelectorAll('video');
         videos.forEach(function(video) {
             video.playbackRate = 2.0; 
         });
     });
+
+    // 2. 通用轮播控制脚本
+    function scrollTrack(btn, direction) {
+        // 找到当前按钮对应的 track
+        const wrapper = btn.closest('.carousel-wrapper');
+        const track = wrapper.querySelector('.carousel-track');
+        const item = track.querySelector('.episode-card');
+        if (!item) return;
+
+        // 获取单个卡片的完整宽度（包括gap）
+        const scrollAmount = item.offsetWidth + 20; // 20 is gap
+        
+        track.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
 </script>
 
 </body>
