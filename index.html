@@ -280,20 +280,20 @@
     </p>
 
     <p style="text-align: justify;">
-        In this work, we introduce a Vision-Language-Safe Action (VLSA) architecture, named <strong>AEGIS</strong>, which contains a plug-and-play safety constraint (SC) layer formulated via control barrier functions. AEGIS integrates directly with existing VLA models to improve safety with theoretical guarantees, while maintaining their original instruction-following performance. To evaluate the efficacy of our architecture, we construct a comprehensive safety-critical benchmark <strong>SafeLIBERO</strong>. Extensive experiments demonstrate that AEGIS achieves a <strong>59.16%</strong> improvement in obstacle avoidance rate while substantially increasing the task execution success rate by <strong>17.25%</strong>.
+        In this work, we introduce a Vision-Language-Safe Action (VLSA) architecture, named AEGIS, which contains a plug-and-play safety constraint (SC) layer formulated via control barrier functions. AEGIS integrates directly with existing VLA models to improve safety with theoretical guarantees, while maintaining their original instruction-following performance. To evaluate the efficacy of our architecture, we construct a comprehensive safety-critical benchmark <strong>SafeLIBERO</strong>. Extensive experiments demonstrate that AEGIS achieves a <strong>59.16%</strong> improvement in obstacle avoidance rate while substantially increasing the task execution success rate by <strong>17.25%</strong>.
     </p>
 
-    <p><strong>We summarize the main contributions as follows:</strong></p>
+    <p>We summarize the main contributions as follows:</p>
 
     <ul style="margin-bottom: 30px;">
         <li style="margin-bottom: 10px;">
-            <strong>We propose AEGIS,</strong> the first approach that integrates CBFs into VLA models to enforce explicit safety constraints. By introducing a plug-and-play SC layer, AEGIS effectively addresses the limitation of end-to-end models regarding the lack of safety guarantees. Our approach has the potential to enhance the safety of any existing VLA model without the need for retraining.
+            We propose AEGIS, the first approach that integrates CBFs into VLA models to enforce explicit safety constraints. By introducing a plug-and-play SC layer, AEGIS effectively addresses the limitation of end-to-end models regarding the lack of safety guarantees. Our approach has the potential to enhance the safety of any existing VLA model without the need for retraining.
         </li>
         <li style="margin-bottom: 10px;">
-            <strong>We design a vision-language based safety assessment module</strong> and an action-driven safety-guaranteed control module, which bridge visual perception and semantic understanding with safety-guaranteed control. By leveraging a CBF-QP solver, the safety of the adjusted actions is theoretically guaranteed.
+            We design a vision-language based safety assessment module and an action-driven safety-guaranteed control module, which bridge visual perception and semantic understanding with safety-guaranteed control. By leveraging a CBF-QP solver, the safety of the adjusted actions is theoretically guaranteed.
         </li>
         <li>
-            <strong>We establish SafeLIBERO,</strong> a comprehensive safety-critical benchmark derived from the LIBERO dataset, encompassing 32 diverse scenarios and 1600 episodes. Extensive experiments demonstrate that AEGIS achieves superior performance over state-of-the-art baselines.
+            We establish SafeLIBERO, a comprehensive safety-critical benchmark derived from the LIBERO dataset, encompassing 32 diverse scenarios and 1600 episodes. Extensive experiments demonstrate that AEGIS achieves superior performance over state-of-the-art baselines.
         </li>
     </ul>
 
@@ -317,6 +317,9 @@
             We compare <strong>OpenVLA</strong>, <strong>$\pi_{0.5}$</strong>, and <strong>Ours</strong> across 8 tasks.<br>
             Each task contains <strong>5 Episodes</strong>. Swipe or click arrows to view different episodes.
         </p>
+        <div class="figure-container">
+            <img src="figs/results_table.png" alt="Method Overview" style="max-width: 80%; height: auto;">
+        </div>
         <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
             <span style="background-color: #f1f3f5; padding: 8px 20px; border-radius: 20px; font-size: 20px; font-weight: bold; color: #555; border: 1px solid #e0e0e0;">
                 SafeLIBERO-Spatial
