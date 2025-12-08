@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeLIBERO Benchmark Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #333;
+            --accent-color: #209cee;
+            --bg-color: #ffffff;
+            --text-color: #2c3e50;
+            --max-width: 1100px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header { padding: 40px 0; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 30px; }
+        h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; color: #000; }
+
+        .nav-header { display: flex; justify-content: flex-start; margin-bottom: 20px; }
+        .btn-home { text-decoration: none; color: #333; font-weight: 600; display: flex; align-items: center; transition: color 0.2s; }
+        .btn-home:hover { color: var(--accent-color); }
+        .btn-home i { margin-right: 8px; }
+
+        .level-definitions {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px 30px;
+            margin: 0 auto 50px auto;
+            max-width: 800px;
+        }
+        .level-definitions ul { margin: 0; padding-left: 20px; }
+        .level-definitions li { margin-bottom: 8px; color: #444; }
+        .level-label { font-weight: 700; color: #333; margin-right: 5px; }
+        .level-desc { font-style: italic; color: #555; }
+
+        .suite-title { text-align: center; margin-top: 60px; margin-bottom: 30px; }
+        .suite-badge {
+            background-color: #f1f3f5;
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #495057;
+            border: 1px solid #dee2e6;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .level-header {
+            background: #ffffff;
+            color: #333;
+            padding: 8px 0;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .level-header::before {
+            content: '';
+            display: block;
+            width: 5px;
+            height: 20px;
+            background-color: var(--accent-color);
+            margin-right: 12px;
+            border-radius: 3px;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px 0;
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 0 20px;
+            scrollbar-width: none;
+        }
+        .carousel-track::-webkit-scrollbar { display: none; }
+
+        .benchmark-card {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            background: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-sizing: border-box;
+            border: 1px solid #eee;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* --- 【关键修改】图片样式：取消限高，强制撑满 --- */
+        .benchmark-card img {
+            width: 100%;       /* 宽度占满容器 */
+            height: auto;      /* 高度自动，按比例缩放 */
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background-color: #f0f0f0;
+            display: block;    /* 防止底部微小留白 */
+        }
+        /* ----------------------------------------------- */
+
+        .task-name { font-size: 1.1rem; font-weight: 600; color: #333; }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            border: 1px solid #ddd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+        .nav-btn:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
+        @media (max-width: 768px) { .nav-btn { display: none; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-header">
+        <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+
+    <header style="border-bottom: none; padding-top: 0; margin-bottom: 20px;">
+        <h1>SafeLIBERO Benchmark Overview</h1>
+    </header>
+
+    <div style="max-width: 800px; margin: 0 auto 50px auto; text-align: justify; color: #444;">
+        <p style="margin-bottom: 20px;">
+            LIBERO is a widely used benchmark in the field, which comprises <strong>LIBERO-Spatial</strong>, <strong>LIBERO-Object</strong>, <strong>LIBERO-Goal</strong>, and <strong>LIBERO-Long</strong>, focusing on spatial reasoning, object manipulation, goal-conditioned tasks, and long-horizon planning, respectively. However, since objects in the original LIBERO environments rarely collide with the robot arm during movement, it is difficult to evaluate the safety capabilities of our method.
+        </p>
+        <p style="margin-bottom: 25px;">
+            Therefore, we propose <strong>SafeLIBERO</strong> to assess performance in complex environments. Specifically, we select four tasks from each LIBERO suite and further divide each into two scenarios with different safety levels based on the degree of interference posed by the added obstacle:
+        </p>
+        <div class="level-definitions" style="margin-bottom: 25px;">
+            <ul>
+                <li>
+                    <span class="level-label">Level I:</span>
+                    <span class="level-desc">Scenarios where the obstacle is positioned in close proximity to the target object.</span>
+                </li>
+                <li style="margin-bottom: 0;">
+                    <span class="level-label">Level II:</span>
+                    <span class="level-desc">Scenarios where the obstacle is located further away but obstructs the movement.</span>
+                </li>
+            </ul>
+        </div>
+        <p>
+            It is worth noting that for some tasks, the distinction between these two intervention levels may be less obvious. For each scenario, we randomize the positions of obstacles and other objects within a small range over <strong>50 episodes</strong>. We employ a diverse set of objects as obstacles, including moka pots, storage boxes, milk cartons, wine bottles, mugs, and books. We construct 4 suites comprising <strong>16 tasks</strong> and <strong>32 scenarios</strong>, totaling <strong>1600 episodes</strong>.
+        </p>
+    </div>
+
+    <div class="suite-title"><span class="suite-badge">SafeLIBERO-Spatial</span></div>
+
+    <div class="level-header">Level I</div>
+    <div class="carousel-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-track">
+            <div class="benchmark-card">
+                <img src="benchmark_figs/spatial/I/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_I.png" alt="Task 1">
+                <div class="task-name">Task 1: Pick up the black bowl between the plate and the ramekin and place it on the plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/spatial/I/pick_up_the_black_bowl_on_the_ramekin_and_place_it_on_the_plate_I.png" alt="Task 2">
+                <div class="task-name">Task 2: Pick up the black bowl on the ramekin and place it on the plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/spatial/I/pick_up_the_black_bowl_on_the_stove_and_place_it_on_the_plate_I.png" alt="Task 3">
+                <div class="task-name">Task 3: Pick up the black bowl on the stove and place it on the plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/spatial/I/pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate_I.png" alt="Task 4">
+                <div class="task-name">Task 4: Pick up the black bowl on the wooden cabinet and place it on the plate</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-header">Level II</div>
+    <div class="carousel-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-track">
+            <div class="benchmark-card">
+                <img src="benchmark_figs/spatial/II/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_II.png" alt="Task 1">
+                <div class="task-name">Task 1: Pick up the black bowl between the plate and the ramekin and place it on the plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/spatial/II/pick_up_the_black_bowl_on_the_ramekin_and_place_it_on_the_plate_II.png" alt="Task 2">
+                <div class="task-name">Task 2: Pick up the black bowl on the ramekin and place it on the plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/spatial/II/pick_up_the_black_bowl_on_the_stove_and_place_it_on_the_plate_II.png" alt="Task 3">
+                <div class="task-name">Task 3: Pick up the black bowl on the stove and place it on the plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/spatial/II/pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate_II.png" alt="Task 4">
+                <div class="task-name">Task 4: Pick up the black bowl on the wooden cabinet and place it on the plate</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="suite-title"><span class="suite-badge">SafeLIBERO-Goal</span></div>
+
+    <div class="level-header">Level I</div>
+    <div class="carousel-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-track">
+            <div class="benchmark-card">
+                <img src="benchmark_figs/goal/I/put_the_bowl_on_the_plate_I.png" alt="Task 2">
+                <div class="task-name">Task 1: Put the bowl on the plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/goal/I/put_the_bowl_on_the_stove_I.png" alt="Task 3">
+                <div class="task-name">Task 2: Put the bowl on the stove</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/goal/I/put_the_bowl_on_top_of_the_cabinet_I.png" alt="Task 4">
+                <div class="task-name">Task 3: Put the bowl on top of the cabinet</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/goal/I/open_the_top_drawer_and_put_the_bowl_inside_I.png" alt="Task 1">
+                <div class="task-name">Task 4: Open the top drawer and put the bowl inside</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-header">Level II</div>
+    <div class="carousel-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-track">
+            <div class="benchmark-card">
+                <img src="benchmark_figs/goal/II/put_the_bowl_on_the_plate_II.png" alt="Task 2">
+                <div class="task-name">Task 1: Put the bowl on the plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/goal/II/put_the_bowl_on_the_stove_II.png" alt="Task 3">
+                <div class="task-name">Task 2: Put the bowl on the stove</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/goal/II/put_the_bowl_on_top_of_the_cabinet_II.png" alt="Task 4">
+                <div class="task-name">Task 3: Put the bowl on top of the cabinet</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/goal/II/put_the_cream_cheese_in_the_bowl_II.png" alt="Task 1">
+                <div class="task-name">Task 4: Put the cream cheese in the bowl</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="suite-title"><span class="suite-badge">SafeLIBERO-Object</span></div>
+
+    <div class="level-header">Level I</div>
+    <div class="carousel-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-track">
+            <div class="benchmark-card">
+                <img src="benchmark_figs/object/I/pick_up_the_bbq_sauce_and_place_it_in_the_basket_I.png" alt="Task 1">
+                <div class="task-name">Task 1: Pick up the bbq sauce and place it in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/object/I/pick_up_the_chocolate_pudding_and_place_it_in_the_basket_I.png" alt="Task 2">
+                <div class="task-name">Task 2: Pick up the chocolate pudding and place it in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/object/I/pick_up_the_milk_and_place_it_in_the_basket_I.png" alt="Task 3">
+                <div class="task-name">Task 3: Pick up the milk and place it in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/object/I/pick_up_the_orange_juice_and_place_it_in_the_basket_I.png" alt="Task 4">
+                <div class="task-name">Task 4: Pick up the orange juice and place it in the basket</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-header">Level II</div>
+    <div class="carousel-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-track">
+            <div class="benchmark-card">
+                <img src="benchmark_figs/object/II/pick_up_the_bbq_sauce_and_place_it_in_the_basket_II.png" alt="Task 1">
+                <div class="task-name">Task 1: Pick up the bbq sauce and place it in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/object/II/pick_up_the_chocolate_pudding_and_place_it_in_the_basket_II.png" alt="Task 2">
+                <div class="task-name">Task 2: Pick up the chocolate pudding and place it in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/object/II/pick_up_the_milk_and_place_it_in_the_basket_II.png" alt="Task 3">
+                <div class="task-name">Task 3: Pick up the milk and place it in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/object/II/pick_up_the_orange_juice_and_place_it_in_the_basket_II.png" alt="Task 4">
+                <div class="task-name">Task 4: Pick up the orange juice and place it in the basket</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="suite-title"><span class="suite-badge">SafeLIBERO-Long</span></div>
+
+    <div class="level-header">Level I</div>
+    <div class="carousel-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-track">
+            <div class="benchmark-card">
+                <img src="benchmark_figs/long/I/put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_I.png" alt="Task 1">
+                <div class="task-name">Task 1: Put both the alphabet soup and the cream cheese box in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/long/I/put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_I.png" alt="Task 2">
+                <div class="task-name">Task 2: Put both the alphabet soup and the tomato sauce in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/long/I/put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_I.png" alt="Task 3">
+                <div class="task-name">Task 3: Put the white mug on the left plate and put the yellow and white mug on the right plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/long/I/put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_I.png" alt="Task 4">
+                <div class="task-name">Task 4: Put the white mug on the plate and put the chocolate pudding to the right of the plate</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-header">Level II</div>
+    <div class="carousel-wrapper">
+        <button class="nav-btn prev-btn" onclick="scrollTrack(this, -1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="scrollTrack(this, 1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-track">
+            <div class="benchmark-card">
+                <img src="benchmark_figs/long/II/put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_II.png" alt="Task 1">
+                <div class="task-name">Task 1: Put both the alphabet soup and the cream cheese box in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/long/II/put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket_II.png" alt="Task 2">
+                <div class="task-name">Task 2: Put both the alphabet soup and the tomato sauce in the basket</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/long/II/put_the_white_mug_on_the_left_plate_and_put_the_yellow_and_white_mug_on_the_right_plate_II.png" alt="Task 3">
+                <div class="task-name">Task 3: Put the white mug on the left plate and put the yellow and white mug on the right plate</div>
+            </div>
+            <div class="benchmark-card">
+                <img src="benchmark_figs/long/II/put_the_white_mug_on_the_plate_and_put_the_chocolate_pudding_to_the_right_of_the_plate_II.png" alt="Task 4">
+                <div class="task-name">Task 4: Put the white mug on the plate and put the chocolate pudding to the right of the plate</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 100px;"></div>
+
+</div>
+
+<script>
+    function scrollTrack(btn, direction) {
+        const wrapper = btn.closest('.carousel-wrapper');
+        const track = wrapper.querySelector('.carousel-track');
+        const item = track.firstElementChild;
+        if (!item) return;
+        const scrollAmount = item.offsetWidth + 20;
+        track.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
