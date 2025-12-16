@@ -51,7 +51,26 @@
         .authors a:hover { text-decoration: underline; color: var(--accent-color); }
         .affiliations { font-size: 0.9rem; color: #666; margin-bottom: 25px; }
         .affiliations span { margin: 0 10px; }
+/* --- Logo Row Styles --- */
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px; /* Logo 之间的间距 */
+            margin: 25px 0 35px 0; /* 上下边距 */
+            flex-wrap: wrap; /* 屏幕窄时自动换行 */
+        }
 
+        .logo-row img {
+            height: 150px; /* 统一高度，根据你的 Logo 实际比例可调整为 40px - 80px */
+            width: auto;  /* 宽度自适应 */
+            object-fit: contain;
+            /* 如果想要黑白效果，鼠标悬停变彩，可以加上下面两行： */
+            /* filter: grayscale(100%) opacity(0.8); */
+            /* transition: all 0.3s ease; */
+        }
+
+        /* .logo-row img:hover { filter: grayscale(0%) opacity(1); } */
         .action-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
         .btn { display: inline-flex; align-items: center; background-color: #333; color: white; padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: transform 0.2s, background-color 0.2s; }
         .btn:hover { background-color: #000; transform: translateY(-2px); }
@@ -404,6 +423,7 @@
         border-color: #1f883d;
         color: #1f883d;
     }
+
     </style>
 </head>
 <body>
@@ -432,6 +452,11 @@
             <br>
             <span><sup>*</sup>Equal Contribution</span>
             <span><sup>†</sup>Corresponding Author</span>
+        </div>
+        <div class="logo-row">
+            <img src="logo/tsinghua.jpg" alt="Tsinghua University">
+            <img src="logo/tetrabot.jpg" alt="TetraBOT">
+            <img src="logo/damo.jpeg" alt="DAMO Academy">
         </div>
         <div class="action-buttons">
             <a href="https://arxiv.org/abs/2512.11891" class="btn"><i class="fas fa-file-pdf"></i> Paper</a>
