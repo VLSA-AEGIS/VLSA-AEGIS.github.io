@@ -172,32 +172,53 @@
 <!--        <a href="index.html" class="btn-home"><i class="fas fa-arrow-left"></i> Back to Home</a>-->
 <!--    </div>-->
 
-    <header style="border-bottom: none; padding-top: 0; margin-bottom: 20px;">
-        <h1>SafeLIBERO Benchmark Overview</h1>
-    </header>
+<header style="border-bottom: none; padding-top: 0; margin-bottom: 30px; text-align: center;">
+    <h1 style="margin-bottom: 20px;">SafeLIBERO Benchmark Overview</h1>
 
-    <div style="max-width: 800px; margin: 0 auto 50px auto; text-align: justify; color: #444;">
-        <p style="margin-bottom: 20px;">
-            LIBERO is a widely used benchmark in the field, which comprises <strong>LIBERO-Spatial</strong>, <strong>LIBERO-Object</strong>, <strong>LIBERO-Goal</strong>, and <strong>LIBERO-Long</strong>, focusing on spatial reasoning, object manipulation, goal-conditioned tasks, and long-horizon planning, respectively. However, since objects in the original LIBERO environments rarely collide with the robot arm during movement, it is difficult to evaluate the safety capabilities of our method.
-        </p>
-        <p style="margin-bottom: 25px;">
-            Therefore, we propose <strong>SafeLIBERO</strong> to assess performance in complex environments. Specifically, we select four tasks from each LIBERO suite and further divide each into two scenarios with different safety levels based on the degree of interference posed by the added obstacle:
-        </p>
-        <div class="level-definitions" style="margin-bottom: 25px;">
-            <ul>
-                <li>
-                    <span class="level-label">Level I:</span>
-                    <span class="level-desc">Scenarios where the obstacle is positioned in close proximity to the target object.</span>
-                </li>
-                <li style="margin-bottom: 0;">
-                    <span class="level-label">Level II:</span>
-                    <span class="level-desc">Scenarios where the obstacle is located further away but obstructs the movement.</span>
-                </li>
-            </ul>
-        </div>
-        <p>
-            It is worth noting that for some tasks, the distinction between these two intervention levels may be less obvious. For each scenario, we randomize the positions of obstacles and other objects within a small range over <strong>50 episodes</strong>. We employ a diverse set of objects as obstacles, including moka pots, storage boxes, milk cartons, wine bottles, mugs, and books. We construct 4 suites comprising <strong>16 tasks</strong> and <strong>32 scenarios</strong>, totaling <strong>1600 episodes</strong>.
-        </p>
+    <a href="https://github.com/THU-RCSCT/vlsa-aegis" target="_blank" style="
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #24292e;
+        color: #ffffff;
+        padding: 8px 20px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 6px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.2s ease;
+        vertical-align: middle;
+    " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 8px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'">
+        <svg height="18" width="18" viewBox="0 0 16 16" version="1.1" style="fill: white; margin-right: 8px;">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.06-1.86 3.75-3.64 3.95.32.28.6.83.6 1.67 0 1.21-.01 2.19-.01 2.48 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        Download Benchmark
+    </a>
+</header>
+<div style="max-width: 800px; margin: 0 auto 50px auto; text-align: justify; color: #444;">
+    <p style="margin-bottom: 20px;">
+        LIBERO is a widely used benchmark in the field, which comprises <strong>LIBERO-Spatial</strong>, <strong>LIBERO-Object</strong>, <strong>LIBERO-Goal</strong>, and <strong>LIBERO-Long</strong>, focusing on spatial reasoning, object manipulation, goal-conditioned tasks, and long-horizon planning, respectively. However, since objects in the original LIBERO environments rarely collide with the robot arm during movement, it is difficult to evaluate the safety capabilities of our method.
+    </p>
+    <p style="margin-bottom: 25px;">
+        Therefore, we propose <strong>SafeLIBERO</strong> to assess performance in complex environments. Specifically, we select four tasks from each LIBERO suite and further divide each into two scenarios with different safety levels based on the degree of interference posed by the added obstacle:
+    </p>
+    <div class="level-definitions" style="margin-bottom: 25px;">
+        <ul>
+            <li>
+                <span class="level-label">Level I:</span>
+                <span class="level-desc">Scenarios where the obstacle is positioned in close proximity to the target object.</span>
+            </li>
+            <li style="margin-bottom: 0;">
+                <span class="level-label">Level II:</span>
+                <span class="level-desc">Scenarios where the obstacle is located further away but obstructs the movement.</span>
+            </li>
+        </ul>
+    </div>
+    <p style="margin-bottom: 30px;">
+        It is worth noting that for some tasks, the distinction between these two intervention levels may be less obvious. For each scenario, we randomize the positions of obstacles and other objects within a small range over <strong>50 episodes</strong>. We employ a diverse set of objects as obstacles, including moka pots, storage boxes, milk cartons, wine bottles, mugs, and books. We construct 4 suites comprising <strong>16 tasks</strong> and <strong>32 scenarios</strong>, totaling <strong>1600 episodes</strong>.
+    </p>
+
     </div>
 
     <div class="suite-title"><span class="suite-badge">SafeLIBERO-Spatial</span></div>
