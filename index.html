@@ -423,7 +423,74 @@
         border-color: #1f883d;
         color: #1f883d;
     }
+/* 让 Grid 保持原样 */
+.results-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
 
+.result-card {
+    background: #fff; /* 或者你原本的背景色 */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    padding: 20px;
+    text-align: center;
+    min-width: 300px; /*稍微加宽一点以容纳两列*/
+    border: 1px solid #eee;
+}
+
+.card-header {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.stat-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.value {
+    font-size: 1.8em; /* 稍微调小一点，之前可能是 2.5em */
+    font-weight: 700;
+    color: #007bff; /* 你原本的蓝色 */
+    line-height: 1.2;
+}
+
+.mode-badge {
+    font-size: 0.75em;
+    background: #eef2f7;
+    color: #555;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 4px 0;
+    font-weight: 500;
+}
+
+.sub-label {
+    font-size: 0.8em;
+    color: #888;
+}
+
+.vertical-divider {
+    width: 1px;
+    height: 60px;
+    background-color: #eee;
+    margin: 0 10px;
+}
     </style>
 </head>
 <body>
@@ -485,23 +552,58 @@
     <p style="text-align: justify;">
         In this work, we introduce a Vision-Language-Safe Action (VLSA) architecture, named AEGIS, which contains a plug-and-play safety constraint (SC) layer formulated via control barrier functions. AEGIS integrates directly with existing VLA models to improve safety with theoretical guarantees, while maintaining their original instruction-following performance. To evaluate the efficacy of our architecture, we construct a comprehensive safety-critical benchmark <strong>SafeLIBERO</strong>. Extensive experiments demonstrate that AEGIS achieves:
     </p>
-    <div class="results-grid">
-            <div class="result-card">
-                <span class="value">77.85%</span>
-                <div class="label">Collision Avoidance Rate</div>
-                <div class="sub-label">vs. Baseline 18.69%</div>
+<div class="results-grid">
+    <div class="result-card multi-stat">
+        <div class="card-header">Collision Avoidance Rate</div>
+        <div class="stat-container">
+            <div class="stat-box">
+                <span class="value">77.9%</span>
+                <span class="mode-badge">Translational Only</span>
+                <div class="sub-label">vs. Baseline 18.7%</div>
             </div>
-            <div class="result-card">
-                <span class="value">68.13%</span>
-                <div class="label">Task Success Rate</div>
-                <div class="sub-label">vs. Baseline 50.88%</div>
+            <div class="vertical-divider"></div>
+            <div class="stat-box">
+                <span class="value">68.9%</span>
+                <span class="mode-badge">Full Action Space</span>
+                <div class="sub-label">vs. Baseline 18.1%</div>
             </div>
-            <div class="result-card">
-                <span class="value">262.30</span>
-                <div class="label">Execution Time Steps</div>
-                <div class="sub-label">vs. Baseline 278.24</div>
-            </div>
+        </div>
     </div>
+
+    <div class="result-card multi-stat">
+        <div class="card-header">Task Success Rate</div>
+        <div class="stat-container">
+            <div class="stat-box">
+                <span class="value">68.1%</span>
+                <span class="mode-badge">Translational Only</span>
+                <div class="sub-label">vs. Baseline 50.9%</div>
+            </div>
+            <div class="vertical-divider"></div>
+            <div class="stat-box">
+                <span class="value">67.5%</span>
+                <span class="mode-badge">Full Action Space</span>
+                <div class="sub-label">vs. Baseline 57.8%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="result-card multi-stat">
+        <div class="card-header">Execution Time Steps</div>
+        <div class="stat-container">
+            <div class="stat-box">
+                <span class="value">262.3</span>
+                <span class="mode-badge">Translational Only</span>
+                <div class="sub-label">vs. Baseline 278.2</div>
+            </div>
+            <div class="vertical-divider"></div>
+            <div class="stat-box">
+                <span class="value">257.6</span>
+                <span class="mode-badge">Full Action Space</span>
+                <div class="sub-label">vs. Baseline 260.8</div>
+            </div>
+        </div>
+    </div>
+</div>
     <p>We summarize the main contributions as follows:</p>
 
     <ul style="margin-bottom: 30px;">
@@ -521,14 +623,14 @@
 </section>
 
     <section>
-        <h2>Demonstrations</h2>
+        <h2>Simulation Demonstrations</h2>
         <p style="text-align: center; margin-bottom: 40px; color: #666;">
 We compare <strong>OpenVLA-OFT</strong>, <strong>$\pi_{0.5}$</strong>, and <strong>Ours</strong> across 32 scenarios on our constructed <a href="benchmark.html" style="color: #209cee; text-decoration: underline;">benchmark</a>.      </p>
         <div class="figure-container">
-            <img src="figs/results_table.png" alt="Method Overview" style="max-width: 80%; height: auto;">
+            <img src="figs/table_new.png" alt="Method Overview" style="max-width: 80%; height: auto;">
         </div>
 <p style="font-size: 0.85rem; color: #888; margin-top: 15px; max-width: 80%; margin-left: auto; margin-right: auto; line-height: 1.4; font-style: italic;">
-        <strong>Note:</strong> Given that the evaluated SafeLIBERO tasks mainly involve tabletop manipulation, we adopt a top-down grasping strategy and restrict the end-effector to translational motion uniformly across all evaluated models in the current version. This reduces action redundancy, allowing for a focused evaluation of positional collision avoidance capabilities.
+        <strong>Note:</strong> To provide a comprehensive evaluation, we conduct experiments in both translational-only and full action space settings. We specifically include the translational setting given that SafeLIBERO tasks primarily involve top-down manipulation. This setting reduces action redundancy, allowing for a focused evaluation of positional collision avoidance capabilities.
     </p>
         <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
             <span style="background-color: #f1f3f5; padding: 8px 20px; border-radius: 20px; font-size: 20px; font-weight: bold; color: #555; border: 1px solid #e0e0e0;">
@@ -798,7 +900,126 @@ We compare <strong>OpenVLA-OFT</strong>, <strong>$\pi_{0.5}$</strong>, and <stro
         </div>
 
     </section>
+<section>
+    <h2>Real-World Demonstrations</h2>
+    <p style="text-align: left; margin-bottom: 40px; color: #666;">
+        In our real-world experiments, we employ pi05-DROID as the base VLA policy. The robotic platform and evaluation tasks are illustrated in the following figure.
+    </p>
 
+    <div class="figure-container">
+        <img src="figs/real_world_tasks.png" alt="Robot Platform" style="max-width: 100%; height: auto;">
+    </div>
+
+    <p style="text-align: justify; font-size: 0.85rem; color: #888; margin-top: 15px; max-width: 100%; margin-left: auto; margin-right: auto; line-height: 1.4; font-style: italic; margin-bottom: 40px;">
+        The platform consists of a 7-DoF Franka Emika Panda arm operated in joint velocity control mode, equipped with a Robotiq 2F-85 gripper. Perception is provided by an external ZED 2 stereo camera and a wrist-mounted ZED Mini stereo camera. The VLA policy infers at 15 Hz, while the low-level controller runs at 1 kHz. Experiments encompass two distinct tasks, each evaluated across two levels with varying obstacles.
+    </p>
+
+    <div style="width: 100%; margin: 0 auto;">
+
+        <h3 style="font-size: 24px; text-align: left; margin-bottom: 20px; margin-top: 30px; font-weight:800;">Baseline</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 10px; margin-bottom: 40px; text-align: center;">
+            <div style="grid-column: span 2; font-weight: bold; font-size: 1rem; border-bottom: 1px solid #ddd; margin-bottom: 5px;">Task: Put the cup in the bowl.</div>
+            <div style="grid-column: span 2; font-weight: bold; font-size: 1rem; border-bottom: 1px solid #ddd; margin-bottom: 5px;">Task: Put the apple in the basket.</div>
+
+            <div>
+                <div class="status-header" style="justify-content: center; gap: 10px; margin-bottom: 5px; font-size: 0.8rem;">
+                    <span class="status-item status-fail"><i class="fas fa-times"></i> Safety</span>
+                    <span class="status-item status-fail"><i class="fas fa-times"></i> Success</span>
+                </div>
+                <video width="100%" autoplay loop muted playsinline style="border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <source src="real_world/baseline/freecompress-cup_I_cropped.mp4" type="video/mp4">
+                </video>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #444;">(a) Level I</div>
+            </div>
+
+            <div>
+                <div class="status-header" style="justify-content: center; gap: 10px; margin-bottom: 5px; font-size: 0.8rem;">
+                    <span class="status-item status-fail"><i class="fas fa-times"></i> Safety</span>
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Success</span>
+                </div>
+                <video width="100%" autoplay loop muted playsinline style="border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <source src="real_world/baseline/freecompress-cup_II_cropped.mp4" type="video/mp4">
+                </video>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #444;">(b) Level II</div>
+            </div>
+
+            <div>
+                <div class="status-header" style="justify-content: center; gap: 10px; margin-bottom: 5px; font-size: 0.8rem;">
+                    <span class="status-item status-fail"><i class="fas fa-times"></i> Safety</span>
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Success</span>
+                </div>
+                <video width="100%" autoplay loop muted playsinline style="border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <source src="real_world/baseline/freecompress-apple_I_cropped.mp4" type="video/mp4">
+                </video>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #444;">(c) Level I</div>
+            </div>
+
+            <div>
+                <div class="status-header" style="justify-content: center; gap: 10px; margin-bottom: 5px; font-size: 0.8rem;">
+                    <span class="status-item status-fail"><i class="fas fa-times"></i> Safety</span>
+                    <span class="status-item status-fail"><i class="fas fa-times"></i> Success</span>
+                </div>
+                <video width="100%" autoplay loop muted playsinline style="border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <source src="real_world/baseline/freecompress-apple_II_cropped.mp4" type="video/mp4">
+                </video>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #444;">(d) Level II</div>
+            </div>
+        </div>
+
+        <h3 style="font-size: 24px; text-align: left; margin-bottom: 20px; color: var(--accent-color); font-weight:800;">Ours (AEGIS)</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px 10px; text-align: center;">
+            <div style="grid-column: span 2; font-weight: bold; font-size: 1rem; border-bottom: 1px solid #ddd; margin-bottom: 5px;">Task: Put the cup in the bowl.</div>
+            <div style="grid-column: span 2; font-weight: bold; font-size: 1rem; border-bottom: 1px solid #ddd; margin-bottom: 5px;">Task: Put the apple in the basket.</div>
+
+            <div>
+                <div class="status-header" style="justify-content: center; gap: 10px; margin-bottom: 5px; font-size: 0.8rem;">
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Safety</span>
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Success</span>
+                </div>
+                <video width="100%" autoplay loop muted playsinline style="border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid var(--accent-color);">
+                    <source src="real_world/ours/freecompress-cup_I_cropped.mp4" type="video/mp4">
+                </video>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #444;">(a) Level I</div>
+            </div>
+
+            <div>
+                <div class="status-header" style="justify-content: center; gap: 10px; margin-bottom: 5px; font-size: 0.8rem;">
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Safety</span>
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Success</span>
+                </div>
+                <video width="100%" autoplay loop muted playsinline style="border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid var(--accent-color);">
+                    <source src="real_world/ours/freecompress-cup_II_cropped.mp4" type="video/mp4">
+                </video>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #444;">(b) Level II</div>
+            </div>
+
+            <div>
+                <div class="status-header" style="justify-content: center; gap: 10px; margin-bottom: 5px; font-size: 0.8rem;">
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Safety</span>
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Success</span>
+                </div>
+                <video width="100%" autoplay loop muted playsinline style="border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid var(--accent-color);">
+                    <source src="real_world/ours/freecompress-apple_I_cropped.mp4" type="video/mp4">
+                </video>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #444;">(c) Level I</div>
+            </div>
+
+            <div>
+                <div class="status-header" style="justify-content: center; gap: 10px; margin-bottom: 5px; font-size: 0.8rem;">
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Safety</span>
+                    <span class="status-item status-pass"><i class="fas fa-check"></i> Success</span>
+                </div>
+                <video width="100%" autoplay loop muted playsinline style="border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid var(--accent-color);">
+                    <source src="real_world/ours/freecompress-apple_II_cropped.mp4" type="video/mp4">
+                </video>
+                <div style="font-size: 0.85rem; margin-top: 5px; color: #444;">(d) Level II</div>
+            </div>
+        </div>
+
+    </div>
+</section>
 <section>
         <h2>BibTeX</h2>
         <div class="bibtex-container">
